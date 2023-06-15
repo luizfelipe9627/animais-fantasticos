@@ -1,13 +1,10 @@
 {
   "name": "animais-fantasticos",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.html",
   "scripts": {
     "dev": "webpack --mode development --watch",
     "build": "webpack --mode production"
   },
-  "author": "Luiz Felipe Silva",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.22.5",
