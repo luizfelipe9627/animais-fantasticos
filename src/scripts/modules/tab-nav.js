@@ -1,31 +1,41 @@
-// Função responsável por fazer o menu  de animais em conjunto com a descrição funcionar.
-// O export é usado para permitir que o código seja usado em outro arquivo JS. O default é geralmente usado para quando tem que exportar somente uma função do mesmo arquivo.
-export default function initTabNav() {
-  const tabMenu = document.querySelectorAll("[data-tab='menu'] li"); // Está puxando todos os elementos LI do dataset tab="menu".
-  const tabContent = document.querySelectorAll("[data-tab='content'] section"); // Está puxando todos os elementos section do dataset tab="content".
-
-  // Função responsável por adicionar a classe ativo e o dataset data-anime ao elemento.
-  function activeTag(index) {
-    // o forEach está passando por cada elemento do tabContent e executando seu escopo.
-    tabContent.forEach((section) => {
-      section.classList.remove("ativo"); // Remove a classe ativo de cada um dos elementos.
-    });
-
-    const directionAnime = tabContent[index].dataset.anime; // Criado uma constante responsável por armazenar o valor do dataset data-anime.
-
-    tabContent[index].classList.add("ativo", directionAnime); // Adiciona a classe ativo e o dataset anime ao número da posição do elemento passado no index.
+// Classe responsável por fazer o menu  de animais em conjunto com a descrição funcionar.
+// O export é usado para permitir que o código seja usado em outro arquivo JS. O default é geralmente usado para quando tem que exportar somente uma função/classe do mesmo arquivo.
+export default class TabNav {
+  // O constructor é um método especial para criar e inicializar um objeto criado a partir de uma classe.
+  constructor(menu, content) {
+    this.tabMenu = document.querySelectorAll(menu); // Está armazenando todos os elementos li do menu passado pelo usuário.
+    this.tabContent = document.querySelectorAll(content); // Está armazenando todos os elementos section do conteúdo passado pelo usuário.
+    this.activeClass = "ativo"; // Está armazenando a classe ativo.
   }
 
-  // Se o tabMenu e o tabContent for true(no caso se não existir vai ser false pois retorna 0), então irá executar o escopo do if.
-  if (tabMenu.length && tabContent.length) {
-    tabContent[0].classList.add("ativo"); // Adiciona a classe ativo ao primeiro elemento do tabContent para quando entrar no site não ficar sem o texto do primeiro item da lista de animais.
+  // Método responsável por adicionar a classe ativo ao elemento passado no index.
+  activeTab(index) {
+    // O forEach está fazendo um loop para cada section, tendo dois argumentos, o que passa por cada item e o segundo que armazena o index/posição do elemento.
+    this.tabContent.forEach((section) => {
+      section.classList.remove(this.activeClass); // Está removendo a classe ativo de todos os elementos section.
+    });
+    const directionAnime = this.tabContent[index].dataset.anime; // Está armazenando o dataset anime do número da posição do elemento passado no index.
+    this.tabContent[index].classList.add(this.activeClass, directionAnime); // Está adicionando a classe ativo e o dataset anime do número da posição do elemento passado no index.
+  }
 
-    // Está fazendo um loop para cada li, tendo dois argumentos, o que passa por cada item e o segundo que armazena o index/posição do elemento.
-    tabMenu.forEach((itemMenu, itemIndex) => {
-      // Quando houver um click em qualquer item li irá executar a função anônima.
+  // Método responsável por adicionar o evento de click no menu.
+  addTabNavEvent() {
+    // O forEach está fazendo um loop para cada LI , tendo dois argumentos, o que passa por cada item e o segundo que armazena o index/posição do elemento.
+    this.tabMenu.forEach((itemMenu, itemIndex) => {
+      // O addEventListener está adicionando um evento de click em cada item do menu.
       itemMenu.addEventListener("click", () => {
-        activeTag(itemIndex); // Está invocando a função activeTag e atribuindo na função o index da imagem clicada.
+        this.activeTab(itemIndex); // Está chamando a função activeTab e passando o index do item do menu.
       });
     });
+  }
+
+  // O init é um método que é executado toda vez que a classe é instanciada.
+  init() {
+    // O if está verificando se o menu e o conteúdo existem.
+    if (this.tabMenu.length && this.tabContent.length) {
+      this.activeTab(0); // Está chamando a função activeTab e passando o index 0.
+      this.addTabNavEvent(); // Está chamando a função addTabNavEvent.
+    }
+    return this; // Está retornando o objeto criado para permitir a que o init possa usar ou acessar outros métodos da classe.
   }
 }

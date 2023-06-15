@@ -29,5 +29,6 @@ export default class Accordion {
       this.toggleAccordion(this.accordionList[0]); // Ativa o primeiro item do accordionList.
       this.addAccordionEvent(); // Adiciona o evento de click em cada item do accordionList.
     }
+    return this; // Está retornando o objeto criado para permitir a que o init possa usar ou acessar outros métodos da classe.
   }
 }
