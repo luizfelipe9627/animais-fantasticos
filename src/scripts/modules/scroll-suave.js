@@ -38,6 +38,6 @@ export default class ScrollSuave {
     if (this.internsLinks.length) {
       this.addEventLink(); // Está chamando o método addEventLink.
     }
-    return this; // Está retornando o objeto criado.
+    return this; // Está retornando o objeto criado para permitir a que o init possa usar ou acessar outros métodos da classe.
   }
 }
