@@ -1,33 +1,37 @@
-// Função responsável por fazer o tooltips funcionar, que são textos informativos exibidos em pequenas caixas flutuantes junto aos elementos (inputs, labels, menus, etc.) quando o usuário para o cursor do mouse sobre eles.
-// O export é usado para permitir que o código seja usado em outro arquivo JS. O default é geralmente usado para quando tem que exportar somente uma função do mesmo arquivo.
-export default function initTooltip() {
-  // Está puxando do DOM elementos dataset definidos no HTML para serem usamos no JS.
-  const tooltips = document.querySelectorAll("[data-tooltip]");
+// Classe responsável por fazer o tooltips funcionar, que são textos informativos exibidos em pequenas caixas flutuantes junto aos elementos (inputs, labels, menus, etc.) quando o usuário para o cursor do mouse sobre eles.
+// O export é usado para permitir que o código seja usado em outro arquivo JS. O default é geralmente usado para quando tem que exportar somente uma função/classe do mesmo arquivo.
+export default class Tooltip {
+  // O constructor é um método especial para criar e inicializar um objeto criado a partir de uma classe.
+  constructor(tooltips) {
+    this.tooltips = document.querySelectorAll(tooltips); // Está pegando todos os elementos tooltips e armazenando na propriedade tooltips.
+    this.onMouseOver = this.onMouseOver.bind(this); // O this está referenciando a função pai(onMouseOver) dentro da classe e está passando o this para a função bind.
+    this.onMouseMove = this.onMouseMove.bind(this); // O this está referenciando a função pai(onMouseMove) dentro da classe e está passando o this para a função bind.
+    this.onMouseLeave = this.onMouseLeave.bind(this); // O this está referenciando a função pai(onMouseLeave) dentro da classe e está passando o this para a função bind.
+  }
 
-  // Criado um objeto que é chamado quando o evento de mousemove é acionado.
-  const onMouseMove = {
-    handleEvent(event) {
-      // O this referencia a função pai(onMouseOver) e pega o elemento tooltipBox é adiciona 20px ao left(absoluto) e adiciona 20px ao top(absoluto) conforme a posição do mouse no elemento.
-      this.tooltipBox.style.top = `${event.pageY + 20}px`;
-      this.tooltipBox.style.left = `${event.pageX + 20}px`;
-    },
-  };
+  // Função onMouseMove responsável pelo o que ocorre quando o mouse se move em cima do elemento tooltipBox. Recebe como seu parâmetro o evento.
+  onMouseMove(event) {
+    // O this referencia a função pai(onMouseOver) e pega o elemento tooltipBox é adiciona 20px ao left(absoluto) e adiciona 20px ao top(absoluto) conforme a posição do mouse no elemento.
+    this.tooltipBox.style.top = `${event.pageY + 20}px`;
 
-  // Criado um objeto que é chamado quando o evento de mouseleave é acionado.
-  const onMouseLeave = {
-    // Criado um método chamado handleEvent(só pode ser esse nome) que é responsável por remover o tooltipBox da tela.
-    handleEvent() {
-      // O this está referenciando a função onMouseOver.
-      this.tooltipBox.remove(); // Está removendo o tooltipBox da tela.
+    // Se a posição do mouse no eixo X for maior que a largura da janela do navegador então executa o escopo definido.
+    if (event.pageX + 240 > window.innerWidth) {
+      this.tooltipBox.style.left = `${event.pageX - 190}px`; // O this referencia a função pai(onMouseOver) e pega o elemento tooltipBox é subtrai 190px do left(absoluto) conforme a posição do mouse no elemento.
+    } else {
+      this.tooltipBox.style.left = `${event.pageX + 20}px`; // O this referencia a função pai(onMouseOver) e pega o elemento tooltipBox é adiciona 20px ao left(absoluto) conforme a posição do mouse no elemento.
+    }
+  }
 
-      // O this e o element está referenciando a função onMouseOver e está removendo o evento quando ele já tiver sido executado.
-      this.element.removeEventListener("mouseleave", onMouseLeave);
-      this.element.removeEventListener("mousemove", onMouseMove);
-    },
-  };
+  // Função onMouseLeave responsável pelo o que ocorre quando o mouse sair de cima do elemento tooltipBox. Recebe como seu parâmetro o evento currentTarget.
+  onMouseLeave({ currentTarget }) {
+    this.tooltipBox.remove(); // O this está referenciando a função pai(onMousLeave) dentro da classe e está removendo o elemento tooltipBox.
+
+    currentTarget.removeEventListener("mouseleave", this.onMouseLeave); // O event.currentTarget está referenciando o elemento que está com o mouse em cima e está removendo o evento de escuta do mouseleave.
+    currentTarget.removeEventListener("mousemove", this.onMouseMove); // O event.currentTarget está referenciando o elemento que está com o mouse em cima e está removendo o evento de escuta do mousemove.
+  }
 
   // Função criarTooltipBox responsável pela criação do tooltipBox, que recebe como seu parâmetro uma propriedade chamada element.
-  function criarTooltipBox(element) {
+  criarTooltipBox(element) {
     const tooltipBox = document.createElement("div"); // Cria um elemento div que é armazena na constante tooltipBox.
     const text = element.getAttribute("aria-label"); // Obtém o texto criado no elemento aria-label no HTML e armazena na constante text.
 
@@ -36,27 +40,31 @@ export default function initTooltip() {
 
     document.body.appendChild(tooltipBox); // No final do body adiciona(torna filho) o elemento tooltipBox passado.
 
-    return tooltipBox; // Retorna a constante tooltipBox presente dentro da função onMouseOver.
+    this.tooltipBox = tooltipBox; // O this referencia a função pai(onMouseOver) dentro da classe e pega o elemento tooltipBox e armazena na propriedade tooltipBox.
   }
 
   // Função onMouseOver responsável pelo o que ocorre quando o mouse for passado por cima do elemento tooltipBox.
-  function onMouseOver() {
-    const tooltipBox = criarTooltipBox(this); // O this faz referencia ao item que está sendo adicionado o evento, no caso o tooltips.
+  onMouseOver({ currentTarget }) {
+    this.criarTooltipBox(currentTarget); // O this referencia a função pai(onMouseOver) dentro da classe e executa a função criarTooltipBox passando o elemento que está com o mouse em cima.
 
-    onMouseLeave.tooltipBox = tooltipBox; // No objeto onMouseLeave está criando uma propriedade chamada tooltipBox que recebe o criarTooltipBox.
-    onMouseLeave.element = this; // No objeto onMouseLeave está criando uma propriedade chamada element que recebe a função onMouseOver.
-    // Está criando um evento de escuta na função(this referencia a função onMouseOver) e chamando o objeto onMouseLeave.
-    this.addEventListener("mouseleave", onMouseLeave); // Criado um evento que ocorre quando o mouse sai do elemento pai(no caso a função onMouseOver) e executa o objeto onMouseLeave criado.
-
-    onMouseMove.tooltipBox = tooltipBox; // No objeto onMouseMove está criando uma propriedade chamada tooltipBox que recebe o criarTooltipBox.
-    this.addEventListener("mousemove", onMouseMove); // Criado um evento que ocorre a movimentação do o mouse no elemento pai(no caso a função onMouseOver) ele executa o objeto onMouseMove.
+    currentTarget.addEventListener("mouseleave", this.onMouseLeave); // O currentTarget referencia o elemento que está com o mouse em cima e adiciona um evento de escuta do mouseleave.
+    currentTarget.addEventListener("mousemove", this.onMouseMove); // O currentTarget referencia o elemento que está com o mouse em cima e adiciona um evento de escuta do mousemove.
   }
 
-  // Para evitar dar erro primeiro o if verifica se os elementos são true, se for existem na página, então se existir ele torna as funções e métodos criados existentes.
-  if (tooltips) {
+  // Função addTooltipsEvent responsável por adicionar o evento de mouseover em cada elemento tooltips.
+  addTooltipsEvent() {
     // O forEach passa por cada elemento tooltips e executa o escopo definido.
-    tooltips.forEach((item) => {
-      item.addEventListener("mouseover", onMouseOver); // A cada tooltip adiciona um evento de mouse quando for passado o mouse por cima do elemento que executa a função onMouseOver.
+    this.tooltips.forEach((item) => {
+      item.addEventListener("mouseover", this.onMouseOver); // A cada tooltip adiciona um evento de mouse quando for passado o mouse por cima do elemento que executa a função onMouseOver.
     });
+  }
+
+  // Função init responsável por iniciar a função addTooltipsEvent.
+  init() {
+    // Se existir tooltips então executa o escopo definido.
+    if (this.tooltips) {
+      this.addTooltipsEvent(); // Executa a função addTooltipsEvent.
+    }
+    return this; // Está retornando o objeto criado para permitir a que o init possa usar ou acessar outros métodos da classe.
   }
 }
