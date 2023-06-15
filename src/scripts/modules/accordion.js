@@ -1,29 +1,33 @@
-// Função responsável por fazer o accordion list do faq funcionar.
-// O export é usado para permitir que o código seja usado em outro arquivo JS. O default é geralmente usado para quando tem que exportar somente uma função do mesmo arquivo.
-export default function initAccordion() {
-  const accordionList = document.querySelectorAll(
-    "[data-anime='accordion'] dt"
-  ); // Está pegando no DOM todos so DT presente dentro do elemento com a classe js-accordion.
-
-  const activeClass = "ativo"; // Criado uma variável que contém a classe ativo, pois repete muito no código.
-
-  // Função responsável por adicionar e remover as classes que faz o accordion funcionar quando for disparado o evento de clique.
-  function activeAccordion() {
-    // O toggle está adicionando a classe ativo caso ela não exista no elemento, e removendo a classe quando já existir.
-    // O this faz sempre referência ao elemento principal, nesse caso o accordionList.
-    this.classList.toggle(activeClass);
-    this.nextElementSibling.classList.toggle(activeClass); // O nextElementSibling está pegando o elemento abaixo do item(dt).
+// Classe responsável por fazer o accordion list do faq funcionar.
+// O export é usado para permitir que o código seja usado em outro arquivo JS. O default é geralmente usado para quando tem que exportar somente uma função/classe do mesmo arquivo.
+export default class Accordion {
+  // O constructor é um método especial para criar e inicializar um objeto criado a partir de uma classe.
+  constructor(list) {
+    // O this está referenciando o valor presente dentro do objeto Accordion, atráves do constructor.
+    this.accordionList = document.querySelectorAll(list); // O querySelectorAll está pegando todos os elementos que estão dentro do list.
+    this.activeClass = "ativo"; // Atribuindo o valor ativo para a variável activeClass. //
   }
 
-  // Se o faqList for true(no caso se não existir vai ser false pois retorna 0), então irá executar o escopo do if.
-  if (accordionList.length) {
-    accordionList[0].classList.add(activeClass); // Por padrão adiciona a classe ativo ao primeiro DT.
-    accordionList[0].nextElementSibling.classList.add(activeClass); // Por padrão adiciona a classe ativo ao primeiro DD.
+  // Função responsável por adicionar a classe ativo ao elemento clicado.
+  toggleAccordion(item) {
+    // O this está referenciando o valor presente dentro do objeto Accordion, atráves do constructor.
+    item.classList.toggle(this.activeClass); // Adiciona uma classe ao elemento clicado e se já existir remove a classe.
+    item.nextElementSibling.classList.toggle(this.activeClass); // O nextElementSibling está pegando o elemento abaixo do item(dt).
+  }
 
-    // Percorre por cada item (DT e DD) da lista faq.
-    accordionList.forEach((item) => {
-      // Ao clicar em qualquer elemento do accordionList executa a função activeAccordion.
-      item.addEventListener("click", activeAccordion);
+  // Função responsável por adicionar o evento de click em cada item do accordionList.
+  addAccordionEvent() {
+    // O forEach está percorrendo cada item do accordionList e para cada item está adicionando um evento de click.
+    this.accordionList.forEach((item) => {
+      item.addEventListener("click", () => this.toggleAccordion(item)); // Ao clicar em qualquer elemento do accordionList executa a função toggleAccordion e passa como parãmetro da função o item clicado.
     });
+  }
+
+  // Função responsável por iniciar o accordion.
+  init() {
+    if (this.accordionList.length) {
+      this.toggleAccordion(this.accordionList[0]); // Ativa o primeiro item do accordionList.
+      this.addAccordionEvent(); // Adiciona o evento de click em cada item do accordionList.
+    }
   }
 }
