@@ -1,33 +1,43 @@
-// Função responsável por fazer o scroll suave para as section funcionar.
+// Classe responsável por fazer o scroll suave para as section funcionar.
 // O export é usado para permitir que o código seja usado em outro arquivo JS. O default é geralmente usado para quando tem que exportar somente uma função do mesmo arquivo.
-export default function initScrollToSection() {
-  const internsLinks = document.querySelectorAll(
-    "[data-menu='smooth'] a[href^='#']"
-  ); // Está pegando no DOM todos os links que começam com hash(#) e contenham o dataset menu="smooth"
+export default class ScrollSuave {
+  // O construtor é usado para criar um objeto e definir suas propriedades e métodos.
+  constructor(links, options) {
+    this.internsLinks = document.querySelectorAll(links); // Atribui ao this.internsLinks os links do menu passado pelo usuário.
+    // Se o options não for definido, então irá executar o if.
+    if (options !== true) {
+      // Está definindo o valor padrão para o options.
+      this.options = { behavior: "smooth", block: "start" };
+    } else {
+      this.options = options; // Atribui ao this.options o options passado pelo usuário.
+    }
 
-  function scrollToSection(e) {
+    this.scrollToSection = this.scrollToSection.bind(this); // Está associando o this do objeto criado ao this do método scrollToSection.
+  }
+
+  // O método scrollToSection está sendo usado para fazer o scroll suave funcionar.
+  scrollToSection(e) {
     e.preventDefault(); // Usado para impedir que ao clicar no menu seja levado até a sessão correspondente.
 
     const href = e.currentTarget.getAttribute("href"); // Está pegando o atributo(valor) presente dentro do href clicado.
     const section = document.querySelector(href); // Está associando o HREF extraindo com a section que possui o mesmo HREF.
-
-    section.scrollIntoView({
-      block: "start",
-      behavior: "smooth",
-    });
-
-    // * Forma alternativa.
-    // const sectionTop = section.offsetTop; // Pega quanto de altura tem do topo da página até o elemento.
-
-    // window.scrollTo({
-    //  top: sectionTop, // Leva até a section do item clicado no menu.
-    //  behavior: 'smooth', // Anima o scroll.
-    // });
+    section.scrollIntoView(this.options); // O scrollIntoView é usado para fazer o scroll suave.
   }
 
-  // O forEach percorre por cada link do js-menu.
-  internsLinks.forEach((link) => {
-    // Ao clicar em qualquer link do internsLinks executa a função scrollToSection.
-    link.addEventListener("click", scrollToSection);
-  });
+  // O método addEventLink está adicionando o evento de click ao link do menu.
+  addEventLink() {
+    // O this está sendo usado para referenciar o objeto que está sendo criado, sendo assim, o this.internsLinks está se referindo ao link do menu.
+    this.internsLinks.forEach((link) => {
+      link.addEventListener("click", this.scrollToSection); // Adiciona o evento de click ao link do menu e se houver click aciona o método scrollToSection.
+    });
+  }
+
+  // O método init está sendo usado para iniciar o objeto criado.
+  init() {
+    // Se o this.internsLinks.length for maior que 0, então irá executar o if.
+    if (this.internsLinks.length) {
+      this.addEventLink(); // Está chamando o método addEventLink.
+    }
+    return this; // Está retornando o objeto criado.
+  }
 }
