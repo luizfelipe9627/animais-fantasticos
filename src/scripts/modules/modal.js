@@ -1,30 +1,45 @@
-// Função responsável por fazer o modal aparecer e sumir da tela.
-// O export é usado para permitir que o código seja usado em outro arquivo JS. O default é geralmente usado para quando tem que exportar somente uma função do mesmo arquivo.
-export default function initModal() {
-  // Está puxando do DOM elementos dataset definidos no HTML para serem usamos no JS.
-  const botaoAbrir = document.querySelector("[data-modal='open']");
-  const botaoFechar = document.querySelector("[data-modal='close']");
-  const containerModal = document.querySelector("[data-modal='container']");
+// Classe responsável por fazer o modal de login aparecer e sumir da tela.
+// O export é usado para permitir que o código seja usado em outro arquivo JS. O default é geralmente usado para quando tem que exportar somente uma função/classe do mesmo arquivo.
+export default class Modal {
+  constructor(openButton, closeButton, containerModal) {
+    this.openButton = document.querySelector(openButton);
+    this.closeButton = document.querySelector(closeButton);
+    this.containerModal = document.querySelector(containerModal);
 
-  // Criado uma função responsável por abrir o modal e que contém um parâmetro chamado event.
-  function toggleModal(event) {
+    // O bind(this) é usado para manter o this do objeto criado, sem ele o this iria referenciar o elemento que está sendo clicado.
+    this.eventToggleModal = this.eventToggleModal.bind(this);
+    this.clickOutsideModal = this.clickOutsideModal.bind(this);
+  }
+
+  // Criado uma função responsável por abrir o modal.
+  toggleModal() {
+    this.containerModal.classList.toggle("ativo"); // Adiciona(se não tiver) a classe chamada ativo e remove(caso já tenha) a classe no elemento containerModal.
+  }
+
+  // Criado uma função responsável por abrir o modal quando for clicado no botão, a função contém um parâmetro chamado event.
+  eventToggleModal(event) {
     event.preventDefault(); // Evita que ao clicar ele saia da página.
-    containerModal.classList.toggle("ativo"); // Adiciona(se não tiver) a classe chamada ativo e remove(caso já tenha) a classe no elemento containerModal.
+    this.toggleModal(event); // Executa a função abrirModal.
   }
 
   // Criado uma função responsável fechar o modal quando for clicado fora dele, a função contém um parâmetro chamado event.
-  function cliqueForaModal(event) {
-    // Se o event target(faz uma referência ao objeto/elemento que enviou o evento) da função for igual ao elemento pai(containerModal) irá executar o if.
-    if (event.target === this) {
-      toggleModal(event); // Executa a função fecharModal.
+  clickOutsideModal(event) {
+    // Verifica se o elemento clicado é o mesmo que está sendo referenciado pelo this, no caso o containerModal, se for executa o bloco de comando.
+    if (event.target === this.containerModal) {
+      this.toggleModal(); // Executa a função fecharModal.
     }
   }
 
-  // Para evitar dar erro primeiro o if verifica se os elementos existem na página, se existir ele torna as eventos criados existentes.
-  if (botaoAbrir && botaoFechar && containerModal) {
-    // Criado eventos de clique que ao serem acionadas executam funções.
-    botaoAbrir.addEventListener("click", toggleModal);
-    botaoFechar.addEventListener("click", toggleModal);
-    containerModal.addEventListener("click", cliqueForaModal);
+  addModalEvents() {
+    this.openButton.addEventListener("click", this.eventToggleModal); // Adiciona o evento de click ao botão de abrir o modal.
+    this.closeButton.addEventListener("click", this.eventToggleModal); // Adiciona o evento de click ao botão de fechar o modal.
+    this.containerModal.addEventListener("click", this.clickOutsideModal); // Adiciona o evento de click ao container do modal.
+  }
+
+  init() {
+    if (this.openButton && this.closeButton && this.containerModal) {
+      this.addModalEvents(); // Adiciona os eventos ao elemento.
+    }
+    return this; // Está retornando o objeto criado para permitir a que o init possa usar ou acessar outros métodos da classe.
   }
 }
