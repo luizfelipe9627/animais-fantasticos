@@ -2,8 +2,8 @@
 import ScrollSuave from "./modules/scroll-suave.js";
 import Accordion from "./modules/accordion.js";
 import TabNav from "./modules/tab-nav.js";
+import Modal from "./modules/modal.js";
 
-import initModal from "./modules/modal.js";
 import initTooltip from "./modules/tooltip.js";
 import initDropdownMenu from "./modules/dropdown-menu.js";
 import initMenuMobile from "./modules/menu-mobile.js";
@@ -19,10 +19,19 @@ scrollSuave.init(); // Está chamando o método init do objeto criado.
 const accordion = new Accordion("[data-anime='accordion'] dt"); // Está criando um objeto e passando o DT do faq como parâmetro.
 accordion.init(); // Está chamando o método init do objeto criado.
 
-const tabNav = new TabNav("[data-tab='menu'] li", "[data-tab='content'] section"); // Está criando um objeto e passando o menu e o conteúdo como parâmetro.
+const tabNav = new TabNav(
+  "[data-tab='menu'] li",
+  "[data-tab='content'] section"
+); // Está criando um objeto e passando o menu e o conteúdo como parâmetro.
 tabNav.init(); // Está chamando o método init do objeto criado.
 
-initModal();
+const modal = new Modal(
+  "[data-modal='open']",
+  "[data-modal='close']",
+  "[data-modal='container']"
+); // Está criando um objeto e passando o botão abrir, fechar e o container como parâmetro.
+modal.init(); // Está chamando o método init do objeto criado.
+
 initTooltip();
 initDropdownMenu();
 initMenuMobile();
