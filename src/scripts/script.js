@@ -1,5 +1,5 @@
 // O import é usado para chamar uma função por exemplo para importar dinamicamente um módulo que utiliza export.
-import ScrollSuave from "./modules/scroll-suave.js";
+import ScrollSuave from "./modules/scroll-smooth.js";
 import Accordion from "./modules/accordion.js";
 import TabNav from "./modules/tab-nav.js";
 import Modal from "./modules/modal.js";
@@ -7,10 +7,10 @@ import Tooltip from "./modules/tooltip.js";
 
 import initDropdownMenu from "./modules/dropdown-menu.js";
 import initMenuMobile from "./modules/menu-mobile.js";
-import initFuncionamento from "./modules/funcionamento.js";
-import initFetchAnimais from "./modules/fetch-animais.js";
+import initFuncionamento from "./modules/operation.js";
+import initFetchAnimais from "./modules/fetch-animals.js";
 import initFetchBitcoin from "./modules/fetch-bitcoin.js";
-import initAnimationScroll from "./modules/scroll-animacao.js";
+import initAnimationScroll from "./modules/scroll-animation.js";
 
 // Está executando as funções.
 const scrollSuave = new ScrollSuave("[data-menu='smooth'] a[href^='#']"); // Está criando um objeto e passando o link do menu como parâmetro.

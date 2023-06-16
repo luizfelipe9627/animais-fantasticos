@@ -1,4 +1,4 @@
-import AnimaNumeros from './anima-numeros'; // O import é usado para chamar uma função por exemplo para importar dinamicamente um módulo que utiliza export.
+import AnimationNumbers from "./animation-numbers"; // O import é usado para chamar uma função por exemplo para importar dinamicamente um módulo que utiliza export.
 
 // Função responsável por adicionar os nomes das espécies e total delas.
 // O export é usado para permitir que o código seja usado em outro arquivo JS. O default é geralmente usado para quando tem que exportar somente uma função do mesmo arquivo.
@@ -33,8 +33,8 @@ export default function initFetchAnimais() {
         numbersGrid.appendChild(divAnimal); // Adiciona as divs como filhos do elemento numbersGrid.
       });
 
-      const animaNumeros = new AnimaNumeros("[data-numero]", ".numeros", "ativo"); // Está criando um objeto e passando o data-numero como parâmetro.
-      animaNumeros.init(); // Está chamando o método init do objeto criado.
+      const animationNumbers = new AnimationNumbers("[data-numero]", ".numeros", "ativo"); // Está criando um objeto e passando o data-numero como parâmetro.
+      animationNumbers.init(); // Está chamando o método init do objeto criado.
 
     } catch (erro) {
       // Caso ocorra qualquer erro no código acima o bloco do catch é executado.

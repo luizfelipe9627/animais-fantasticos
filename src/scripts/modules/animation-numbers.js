@@ -1,6 +1,6 @@
 // Classe responsável por abrir contar e animar os números.
 // O export é usado para permitir que o código seja usado em outro arquivo JS. O default é geralmente usado para quando tem que exportar somente uma função/classe do mesmo arquivo.
-export default class animationNumbers {
+export default class AnimationNumbers {
   // O constructor é um método especial para criar e inicializar um objeto criado a partir de uma classe.
   constructor(numbers, observerTarget, observerClass) {
     this.numbers = document.querySelectorAll(numbers); // Está armazenando na propriedade numbers o valor do parâmetro numbers atribuido pelo usuário.
