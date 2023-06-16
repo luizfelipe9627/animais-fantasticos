@@ -33,7 +33,7 @@ const modal = new Modal(
 modal.init(); // Está chamando o método init do objeto criado.
 
 const tooltip = new Tooltip("[data-tooltip]"); // Está criando um objeto e passando o tooltip como parâmetro.
-tooltip.init(); // Está chamando o método init do objeto criado. 
+tooltip.init(); // Está chamando o método init do objeto criado.
 
 initDropdownMenu();
 initMenuMobile();
