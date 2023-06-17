@@ -9,8 +9,7 @@ import fetchBitcoin from "./modules/fetch-bitcoin.js";
 import AnimationScroll from "./modules/scroll-animation.js";
 import DropdownMenu from "./modules/dropdown-menu.js";
 import MenuMobile from "./modules/menu-mobile.js";
-
-import initFuncionamento from "./modules/operation.js";
+import Operation from "./modules/operation.js";
 
 // Está executando as funções.
 const scrollSuave = new ScrollSmooth("[data-menu='smooth'] a[href^='#']"); // Está criando um objeto e passando o link do menu como parâmetro.
@@ -48,4 +47,5 @@ dropdownMenu.init(); // Está chamando o método init do objeto criado.
 const menuMobile = new MenuMobile('[data-menu="button"]', '[data-menu="list"]'); // Está criando um objeto e passando o dataset menu="button" e o dataset menu="list" como parâmetro.
 menuMobile.init(); // Está chamando o método init do objeto criado.
 
-initFuncionamento();
+const operation = new Operation("[data-semana]", "aberto"); // Está criando um objeto e passando o dataset semana e a classe aberto como parâmetro.
+operation.init(); // Está chamando o método init do objeto criado.
