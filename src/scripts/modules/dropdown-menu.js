@@ -13,9 +13,8 @@ export default class DropdownMenu {
     } else {
       this.events = events; // Está criando uma variável que contém dois eventos de escuta, o touchstart e o click.
     }
-
-    // O bind(this) está referenciando o objeto da classe DropdownMenu.
-    this.activeDropdownMenu = this.activeDropdownMenu.bind(this);
+    
+    this.activeDropdownMenu = this.activeDropdownMenu.bind(this); // Está criando uma variável que contém a função activeDropdownMenu e está referenciando o objeto da classe DropdownMenu atráves do bind.
   }
 
   // Criado uma função chamada activeDropdownMenu que tem como intuito abrir e fechar o dropdown ao clique, recebe um parâmetro chamado de event.

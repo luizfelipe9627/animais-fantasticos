@@ -8,8 +8,8 @@ import fetchAnimals from "./modules/fetch-animals.js";
 import fetchBitcoin from "./modules/fetch-bitcoin.js";
 import AnimationScroll from "./modules/scroll-animation.js";
 import DropdownMenu from "./modules/dropdown-menu.js";
+import MenuMobile from "./modules/menu-mobile.js";
 
-import initMenuMobile from "./modules/menu-mobile.js";
 import initFuncionamento from "./modules/operation.js";
 
 // Está executando as funções.
@@ -45,5 +45,7 @@ animationScroll.init(); // Está chamando o método init do objeto criado.
 const dropdownMenu = new DropdownMenu("[data-dropdown]"); // Está criando um objeto e passando o dataset dropdown como parâmetro.
 dropdownMenu.init(); // Está chamando o método init do objeto criado.
 
-initMenuMobile();
+const menuMobile = new MenuMobile('[data-menu="button"]', '[data-menu="list"]'); // Está criando um objeto e passando o dataset menu="button" e o dataset menu="list" como parâmetro.
+menuMobile.init(); // Está chamando o método init do objeto criado.
+
 initFuncionamento();
