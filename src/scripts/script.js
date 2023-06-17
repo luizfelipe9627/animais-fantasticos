@@ -7,8 +7,8 @@ import Tooltip from "./modules/tooltip.js";
 import fetchAnimals from "./modules/fetch-animals.js";
 import fetchBitcoin from "./modules/fetch-bitcoin.js";
 import AnimationScroll from "./modules/scroll-animation.js";
+import DropdownMenu from "./modules/dropdown-menu.js";
 
-import initDropdownMenu from "./modules/dropdown-menu.js";
 import initMenuMobile from "./modules/menu-mobile.js";
 import initFuncionamento from "./modules/operation.js";
 
@@ -42,6 +42,8 @@ fetchBitcoin("https://blockchain.info/ticker", ".btc-preco"); // Está chamando 
 const animationScroll = new AnimationScroll("[data-anime='scroll']"); // Está criando um objeto e passando o dataset anime="scroll" como parâmetro.
 animationScroll.init(); // Está chamando o método init do objeto criado.
 
-initDropdownMenu();
+const dropdownMenu = new DropdownMenu("[data-dropdown]"); // Está criando um objeto e passando o dataset dropdown como parâmetro.
+dropdownMenu.init(); // Está chamando o método init do objeto criado.
+
 initMenuMobile();
 initFuncionamento();

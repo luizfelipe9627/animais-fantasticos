@@ -1,33 +1,55 @@
-// O import é usado para chamar uma função por exemplo para importar dinamicamente um módulo que utiliza export.
-import outsideClick from "./outsideclick.js";
+import outsideClick from "./outsideclick.js"; // O import é usado para chamar uma função por exemplo para importar dinamicamente um módulo que utiliza export.
 
-// Função responsável por abrir e fechar o dropdown aparecer ao clicar com o mouse no menu.
-// O export é usado para permitir que o código seja usado em outro arquivo JS. O default é geralmente usado para quando tem que exportar somente uma função do mesmo arquivo.
-export default function initDropdownMenu() {
-  // Está puxando do DOM elementos dataset definidos no HTML para serem usamos no JS.
-  const dropdownMenus = document.querySelectorAll("[data-dropdown]");
+// Classe responsável por abrir e fechar o dropdown aparecer ao clicar com o mouse no menu.
+// O export é usado para permitir que o código seja usado em outro arquivo JS. O default é geralmente usado para quando tem que exportar somente uma função/classe do mesmo arquivo.
+export default class DropdownMenu {
+  constructor(dropdownMenus, events) {
+    this.dropdownMenus = document.querySelectorAll(dropdownMenus); // Está selecionando todos os elementos que contém o dataset dropdown.
+    this.activeClass = "ativo"; // Está criando uma variável que contém a classe ativo.
 
-  // Criado uma função chamada handleClick que tem como intuito abrir e fechar o dropdown ao clique, recebe um parâmetro chamado de event.
-  function handleClick(event) {
+    // Verifica se o events existe se existir executa o if se não executa o else.
+    if (events === undefined) {
+      this.events = ["touchstart", "click"];
+    } else {
+      this.events = events; // Está criando uma variável que contém dois eventos de escuta, o touchstart e o click.
+    }
+
+    // O bind(this) está referenciando o objeto da classe DropdownMenu.
+    this.activeDropdownMenu = this.activeDropdownMenu.bind(this);
+  }
+
+  // Criado uma função chamada activeDropdownMenu que tem como intuito abrir e fechar o dropdown ao clique, recebe um parâmetro chamado de event.
+  activeDropdownMenu(event) {
     event.preventDefault(); // Impede o carregamento da página.
-    // O this está referenciando o menu do forEach passado.
-    this.classList.add("ativo"); // Adiciona uma classe no menu chamado ativo.
 
-    // Executa a função outsideClick que tem o this referenciando o element(data-dropdown) da função, a array referenciando o eve,ts e a função anonima referenciando o callback.
-    outsideClick(this, ["click", "touchstart"], () => {
+    const element = event.currentTarget; // Está criando uma variável que contém o elemento que está sendo clicado.
+
+    element.classList.add(this.activeClass); // Adiciona ao element(data-dropdown) a classe ativo.
+
+    // Executa a função outsideClick que tem o elemento que está sendo clicado como referencia, no caso o element(data-dropdown) da função, a array referenciando o events que vão ser responsável por ativar o callback.
+    outsideClick(element, this.events, () => {
       // Escopo do parâmetro callback criado na função.
-      this.classList.remove("ativo"); // Remove do element(data-dropdown) a classe ativo.
+      element.classList.remove(this.activeClass); // Remove do element(data-dropdown) a classe ativo.
     });
   }
 
-  // Para evitar dar erro primeiro o if verifica se os elementos existem na página, se existir ele torna as funções e métodos criados existentes.
-  if (dropdownMenus) {
+  // Criado uma função chamada addDropdownMenusEvent que tem como intuito adicionar o evento de clique e touchstart ao dropdownMenus.
+  addDropdownMenusEvent() {
     // O forEach passa por cada elemento do dropdownMenus, está recebendo um parâmetro que é cada menu.
-    dropdownMenus.forEach((menu) => {
+    this.dropdownMenus.forEach((menu) => {
       // Criado uma array que contém dois eventos de escuta, o forEach passa percorre por cada evento(nomeado com userEvent).
-      ["touchstart", "click"].forEach((userEvent) => {
-        menu.addEventListener(userEvent, handleClick); // No menu atual do forEach anterior pega o evento disparado e aciona a função handleClick criada.
+      this.events.forEach((userEvent) => {
+        menu.addEventListener(userEvent, this.activeDropdownMenu); // No menu atual do forEach anterior pega o evento disparado e aciona a função activeDropdownMenu criada.
       });
     });
+  }
+
+  // Criado uma função chamada init que tem como intuito iniciar a função addDropdownMenusEvent.
+  init() {
+    // Verifica se o dropdownMenus existe se existir executa o if.
+    if (this.dropdownMenus.length) {
+      this.addDropdownMenusEvent(); // Executa a função addDropdownMenusEvent.
+    }
+    return this; // Está retornando o objeto criado para permitir a que o init possa usar ou acessar outros métodos da classe.
   }
 }
