@@ -1,3 +1,5 @@
+import debounceScroll from "./debounce-scroll.js"; // Importa a função debounceScroll do arquivo debounce-scroll.js.
+
 // Classe responsável por fazer conteúdo aparecer animado ao rolar o scroll e abrir o site.
 // O export é usado para permitir que o código seja usado em outro arquivo JS. O default é geralmente usado para quando tem que exportar somente uma função/classe do mesmo arquivo.
 export default class AnimationScroll {
@@ -6,7 +8,7 @@ export default class AnimationScroll {
     this.windowHalf = window.innerHeight * 0.6; // Está pegando 60% da altura da tela do usuário.
     this.activeClass = "ativo"; // Está definindo o valor padrão para o activeClass.
 
-    this.checkDistance = this.checkDistance.bind(this); // Está associando o this do objeto criado ao this do método checkDistance.
+    this.checkDistance = debounceScroll(this.checkDistance.bind(this), 50); // Está atribuindo a função debounceScroll a variável checkDistance e passando como parâmetro a função checkDistance e o tempo de 200 milissegundos. O bind(this) está sendo usado para que o this não seja perdido ao usar o debounceScroll.
   }
 
   // O método getDistance está sendo usado para pegar a altura do elemento em relação ao topo da página.
