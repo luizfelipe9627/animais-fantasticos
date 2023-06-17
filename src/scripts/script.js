@@ -4,11 +4,11 @@ import Accordion from "./modules/accordion.js";
 import TabNav from "./modules/tab-nav.js";
 import Modal from "./modules/modal.js";
 import Tooltip from "./modules/tooltip.js";
+import fetchAnimals from "./modules/fetch-animals.js";
 
 import initDropdownMenu from "./modules/dropdown-menu.js";
 import initMenuMobile from "./modules/menu-mobile.js";
 import initFuncionamento from "./modules/operation.js";
-import initFetchAnimais from "./modules/fetch-animals.js";
 import initFetchBitcoin from "./modules/fetch-bitcoin.js";
 import initAnimationScroll from "./modules/scroll-animation.js";
 
@@ -35,9 +35,12 @@ modal.init(); // Está chamando o método init do objeto criado.
 const tooltip = new Tooltip("[data-tooltip]"); // Está criando um objeto e passando o tooltip como parâmetro.
 tooltip.init(); // Está chamando o método init do objeto criado.
 
+fetchAnimals("../../src/api/animais.json", ".numeros-grid"); // Está chamando a função fetchAnimals e passando o arquivo JSON e o elemento que contém a classe numeros-grid como parâmetro.
+
 initDropdownMenu();
 initMenuMobile();
 initFuncionamento();
-initFetchAnimais();
 initFetchBitcoin();
 initAnimationScroll();
+
+
