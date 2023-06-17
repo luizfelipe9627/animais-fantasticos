@@ -6,23 +6,33 @@ export default class AnimationScroll {
     this.windowHalf = window.innerHeight * 0.6; // Está pegando 60% da altura da tela do usuário.
     this.activeClass = "ativo"; // Está definindo o valor padrão para o activeClass.
 
-    this.animaScroll = this.animaScroll.bind(this); // Está associando o this do objeto criado ao this do método animaScroll.
+    this.checkDistance = this.checkDistance.bind(this); // Está associando o this do objeto criado ao this do método checkDistance.
   }
 
-  // Função responsável por fazer os elementos aparecerem na tela ao scrollar para cima.
-  animaScroll() {
-    this.sections.forEach((section) => {
-      const sectionTop = section.getBoundingClientRect().top; // o getBoundingClientRect é um método usado para retornar valores em relação ao posicionamento do elemento na tela.
+  // O método getDistance está sendo usado para pegar a altura do elemento em relação ao topo da página.
+  getDistance() {
+    // O this.distance está sendo usado para referenciar o objeto que está sendo criado, sendo assim, o this.sections está se referindo aos elementos passados pelo usuário. O this.section está sendo transformado em um array e está sendo usado o map para percorrer cada section.
+    this.distance = [...this.sections].map((section) => {
+      const offSet = section.offsetTop; // Está pegando a altura do elemento em relação ao topo da página.
+      // Está retornando um objeto com o elemento e a altura do elemento em relação ao topo da página.
+      return {
+        element: section, // Está retornando o elemento.
+        offSet: Math.floor(offSet - this.windowHalf), // Está retornando a altura do elemento em relação ao topo da página.
+      };
+    });
+  }
 
-      const isSectionVisible = sectionTop - this.windowHalf < 0; // Está pegando a altura da section e subtraindo com a altura da tela do usuário e se for menor que 0 irá retornar true.
-
-      // Se isSectionVisible for menor que 0 irá executar o escopo do if que é responsável por fazer os elementos aparecerem na tela ao scrollar para cima.
-      if (isSectionVisible) {
-        section.classList.add(this.activeClass); // Adiciona a classe ativo a section que tiver sua altura negativada(de cima para baixo).
+  // O método checkDistante é responsável por fazer os elementos aparecerem na tela ao scrollar para baixo.
+  checkDistance() {
+    // O forEach está sendo usado para percorrer cada item do array.  parâmetro item do forEach está sendo usado para referenciar cada item do array.
+    this.distance.forEach((item) => {
+      // Se o window.scrollY for maior que a altura do elemento em relação ao topo da página, então irá executar o if.
+      if (window.scrollY > item.offSet) {
+        item.element.classList.add(this.activeClass); // Adiciona a classe ativo a section que tiver sua altura negativada(de cima para baixo).
       }
       // Se não, se a section conter a classe ativo irá executar o escopo do else if que é responsável por fazer os elementos sumirem da tela ao scrollar para cima.
-      else if (section.classList.contains(this.activeClass)) {
-        section.classList.remove(this.activeClass); // Remove a classe ativo a section que tiver sua altura positiva(de baixo para cima).
+      else if (item.element.classList.contains(this.activeClass)) {
+        item.element.classList.remove(this.activeClass); // Remove a classe ativo a section que tiver sua altura positiva(de baixo para cima).
       }
     });
   }
@@ -31,10 +41,17 @@ export default class AnimationScroll {
   init() {
     // Se o this.sections.length for maior que 0, então irá executar o if.
     if (this.sections.length) {
-      this.animaScroll(); // Está executando a função para que assim que o site carregue não fique tudo em branco.
+      this.getDistance(); // Está executando a função para que assim que o site carregue não fique tudo em branco.
 
-      window.addEventListener("scroll", this.animaScroll); // Está adicionando o evento de scroll ao site e se houver scroll aciona a função animaScroll.
+      this.checkDistance(); // Está executando a função para que assim que o site carregue não fique tudo em branco.
+
+      window.addEventListener("scroll", this.checkDistance); // Adiciona o evento de scroll ao window e se houver scroll aciona o método checkDistance.
     }
     return this; // Está retornando o objeto criado para permitir a que o init possa usar ou acessar outros métodos da classe.
+  }
+
+  // O stop está sendo usado para parar o objeto criado.
+  stop() {
+    window.removeEventListener("scroll", this.checkDistance); // Remove o evento de scroll ao window e se houver scroll aciona o método checkDistance.
   }
 }

@@ -1,6 +1,6 @@
 // Classe responsável por fazer o scroll suave para as section funcionar.
 // O export é usado para permitir que o código seja usado em outro arquivo JS. O default é geralmente usado para quando tem que exportar somente uma função/classe o do mesmo arquivo.
-export default class ScrollSuave {
+export default class ScrollSmooth {
   // O construtor é usado para criar um objeto e definir suas propriedades e métodos.
   constructor(links, options) {
     this.internsLinks = document.querySelectorAll(links); // Atribui ao this.internsLinks os links do menu passado pelo usuário.
