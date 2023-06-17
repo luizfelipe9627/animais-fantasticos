@@ -5,11 +5,11 @@ import TabNav from "./modules/tab-nav.js";
 import Modal from "./modules/modal.js";
 import Tooltip from "./modules/tooltip.js";
 import fetchAnimals from "./modules/fetch-animals.js";
+import fetchBitcoin from "./modules/fetch-bitcoin.js";
 
 import initDropdownMenu from "./modules/dropdown-menu.js";
 import initMenuMobile from "./modules/menu-mobile.js";
 import initFuncionamento from "./modules/operation.js";
-import initFetchBitcoin from "./modules/fetch-bitcoin.js";
 import initAnimationScroll from "./modules/scroll-animation.js";
 
 // Está executando as funções.
@@ -37,10 +37,12 @@ tooltip.init(); // Está chamando o método init do objeto criado.
 
 fetchAnimals("../../src/api/animais.json", ".numeros-grid"); // Está chamando a função fetchAnimals e passando o arquivo JSON e o elemento que contém a classe numeros-grid como parâmetro.
 
+fetchBitcoin("https://blockchain.info/ticker", ".btc-preco"); // Está chamando a função fetchBitcoin e passando a URL da API e o elemento que contém a classe btc-preco como parâmetro.
+
+
 initDropdownMenu();
 initMenuMobile();
 initFuncionamento();
-initFetchBitcoin();
 initAnimationScroll();
 
 
