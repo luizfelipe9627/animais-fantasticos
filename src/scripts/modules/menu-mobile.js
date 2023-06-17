@@ -3,6 +3,7 @@ import outsideClick from "./outsideclick.js"; // O import é usado para chamar u
 // Classe responsável por abrir e fechar o menu mobile.
 // O export é usado para permitir que o código seja usado em outro arquivo JS. O default é geralmente usado para quando tem que exportar somente uma função/classe do mesmo arquivo.
 export default class MenuMobile {
+  // O constructor é usado para definir os parâmetros que serão usados na classe.
   constructor(menuButton, menuList, events) {
     this.menuButton = document.querySelector(menuButton); // Está selecionando o elemento passado pelo usuário que contém o dataset menu="button".
     this.menuList = document.querySelector(menuList); // Está selecionando o elemento passado pelo usuário que contém o dataset menu="list".
@@ -31,6 +32,7 @@ export default class MenuMobile {
     });
   }
 
+  // Função responsável por adicionar os eventos de click e touchstart ao menuButton.
   addMenuMobileEvents() {
     // O forEach passa por cada evento(nomeado como userEvent) e executa o escopo caso algum dos eventos definidos sejam disparados.
     this.events.forEach((userEvent) => {
@@ -38,6 +40,7 @@ export default class MenuMobile {
     });
   }
 
+  // Função responsável por iniciar as funções.
   init() {
     // Verifica se o menuButton e o menuList existe se existir executa o if.
     if (this.menuButton && this.menuList) {

@@ -3,6 +3,7 @@ import debounceScroll from "./debounce-scroll.js"; // Importa a função debounc
 // Classe responsável por fazer conteúdo aparecer animado ao rolar o scroll e abrir o site.
 // O export é usado para permitir que o código seja usado em outro arquivo JS. O default é geralmente usado para quando tem que exportar somente uma função/classe do mesmo arquivo.
 export default class AnimationScroll {
+  // O constructor é usado para definir os parâmetros que serão usados na classe.
   constructor(sections) {
     this.sections = document.querySelectorAll(sections); // Atribui ao this.sections os elementos passados pelo usuário.
     this.windowHalf = window.innerHeight * 0.6; // Está pegando 60% da altura da tela do usuário.

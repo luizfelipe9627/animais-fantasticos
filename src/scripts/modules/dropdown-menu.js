@@ -3,6 +3,7 @@ import outsideClick from "./outsideclick.js"; // O import é usado para chamar u
 // Classe responsável por abrir e fechar o dropdown aparecer ao clicar com o mouse no menu.
 // O export é usado para permitir que o código seja usado em outro arquivo JS. O default é geralmente usado para quando tem que exportar somente uma função/classe do mesmo arquivo.
 export default class DropdownMenu {
+  // O constructor é usado para definir os parâmetros que serão usados na classe.
   constructor(dropdownMenus, events) {
     this.dropdownMenus = document.querySelectorAll(dropdownMenus); // Está selecionando todos os elementos que contém o dataset dropdown.
     this.activeClass = "ativo"; // Está criando uma variável que contém a classe ativo.

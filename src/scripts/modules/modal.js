@@ -1,6 +1,7 @@
 // Classe responsável por fazer o modal de login aparecer e sumir da tela.
 // O export é usado para permitir que o código seja usado em outro arquivo JS. O default é geralmente usado para quando tem que exportar somente uma função/classe do mesmo arquivo.
 export default class Modal {
+  // O constructor é usado para definir os parâmetros que serão usados na classe.
   constructor(openButton, closeButton, containerModal) {
     this.openButton = document.querySelector(openButton);
     this.closeButton = document.querySelector(closeButton);
@@ -30,12 +31,14 @@ export default class Modal {
     }
   }
 
+  // Criado uma função responsável por adicionar os eventos de click ao botão de abrir e fechar o modal.
   addModalEvents() {
     this.openButton.addEventListener("click", this.eventToggleModal); // Adiciona o evento de click ao botão de abrir o modal.
     this.closeButton.addEventListener("click", this.eventToggleModal); // Adiciona o evento de click ao botão de fechar o modal.
     this.containerModal.addEventListener("click", this.clickOutsideModal); // Adiciona o evento de click ao container do modal.
   }
 
+  // Criado uma função responsável por iniciar as funções.
   init() {
     if (this.openButton && this.closeButton && this.containerModal) {
       this.addModalEvents(); // Adiciona os eventos ao elemento.
