@@ -1,19 +1,19 @@
 // O import é usado para chamar uma função por exemplo para importar dinamicamente um módulo que utiliza export.
-import ScrollSuave from "./modules/scroll-smooth.js";
+import ScrollSmooth from "./modules/scroll-smooth.js";
 import Accordion from "./modules/accordion.js";
 import TabNav from "./modules/tab-nav.js";
 import Modal from "./modules/modal.js";
 import Tooltip from "./modules/tooltip.js";
 import fetchAnimals from "./modules/fetch-animals.js";
 import fetchBitcoin from "./modules/fetch-bitcoin.js";
+import AnimationScroll from "./modules/scroll-animation.js";
 
 import initDropdownMenu from "./modules/dropdown-menu.js";
 import initMenuMobile from "./modules/menu-mobile.js";
 import initFuncionamento from "./modules/operation.js";
-import initAnimationScroll from "./modules/scroll-animation.js";
 
 // Está executando as funções.
-const scrollSuave = new ScrollSuave("[data-menu='smooth'] a[href^='#']"); // Está criando um objeto e passando o link do menu como parâmetro.
+const scrollSuave = new ScrollSmooth("[data-menu='smooth'] a[href^='#']"); // Está criando um objeto e passando o link do menu como parâmetro.
 scrollSuave.init(); // Está chamando o método init do objeto criado.
 
 const accordion = new Accordion("[data-anime='accordion'] dt"); // Está criando um objeto e passando o DT do faq como parâmetro.
@@ -39,10 +39,9 @@ fetchAnimals("../../src/api/animais.json", ".numeros-grid"); // Está chamando a
 
 fetchBitcoin("https://blockchain.info/ticker", ".btc-preco"); // Está chamando a função fetchBitcoin e passando a URL da API e o elemento que contém a classe btc-preco como parâmetro.
 
+const animationScroll = new AnimationScroll("[data-anime='scroll']"); // Está criando um objeto e passando o dataset anime="scroll" como parâmetro.
+animationScroll.init(); // Está chamando o método init do objeto criado.
 
 initDropdownMenu();
 initMenuMobile();
 initFuncionamento();
-initAnimationScroll();
-
-
