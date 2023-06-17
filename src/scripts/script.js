@@ -6,11 +6,11 @@ import Modal from "./modules/modal.js";
 import Tooltip from "./modules/tooltip.js";
 import fetchAnimals from "./modules/fetch-animals.js";
 import fetchBitcoin from "./modules/fetch-bitcoin.js";
+import AnimationScroll from "./modules/scroll-animation.js";
 
 import initDropdownMenu from "./modules/dropdown-menu.js";
 import initMenuMobile from "./modules/menu-mobile.js";
 import initFuncionamento from "./modules/operation.js";
-import initAnimationScroll from "./modules/scroll-animation.js";
 
 // Está executando as funções.
 const scrollSuave = new ScrollSuave("[data-menu='smooth'] a[href^='#']"); // Está criando um objeto e passando o link do menu como parâmetro.
@@ -39,10 +39,9 @@ fetchAnimals("../../src/api/animais.json", ".numeros-grid"); // Está chamando a
 
 fetchBitcoin("https://blockchain.info/ticker", ".btc-preco"); // Está chamando a função fetchBitcoin e passando a URL da API e o elemento que contém a classe btc-preco como parâmetro.
 
+const animationScroll = new AnimationScroll("[data-anime='scroll']"); // Está criando um objeto e passando o dataset anime="scroll" como parâmetro.
+animationScroll.init(); // Está chamando o método init do objeto criado.
 
 initDropdownMenu();
 initMenuMobile();
 initFuncionamento();
-initAnimationScroll();
-
-
