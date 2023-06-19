@@ -1,5 +1,5 @@
 // Função chamada outsideClick responsável por fazer o dropdown sumir ao clicar fora dele, recebe três parâmetros, um sendo o element(data-dropdown), o outro sendo os eventos e o outro o callback(transformada em uma função) que vai ser executada após o evento ser disparado.
-// O export é usado para permitir que o código seja usado em outro arquivo JS. O default é geralmente usado para quando tem que exportar somente uma função do mesmo arquivo.
+// O export é usado para permitir que o código seja usado em outro arquivo JS. O default é geralmente usado para quando tem que exportar somente uma função/classe do mesmo arquivo.
 export default function outsideClick(element, events, callback) {
   const html = document.documentElement; // Está selecionando o HTML e armazenando na constante html.
   const outside = "data-outisde"; // Criado uma constante contendo uma string de um novo dataset.
