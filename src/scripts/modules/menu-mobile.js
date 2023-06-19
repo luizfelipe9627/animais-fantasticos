@@ -21,7 +21,9 @@ export default class MenuMobile {
   }
 
   // Função openMenu responsável por abrir e fechar o menu mobile.
-  openMenu() {
+  openMenu(event) {
+    event.preventDefault(); // Está prevenindo o comportamento padrão do evento.
+    
     this.menuList.classList.add(this.activeClass); // Está adicionando uma classe chamada ativo no menuList.
     this.menuButton.classList.add(this.activeClass); // Está adicionando uma classe chamada ativo no menuButton.
 
