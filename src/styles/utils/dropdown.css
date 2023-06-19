@@ -35,3 +35,11 @@
   border-right: 10px solid transparent;
   border-bottom: 10px solid #E54;
 }
+
+@media (max-width: 700px) {
+  [data-dropdown] .dropdown-menu {
+    display: block;
+    /* O forwards é usado para quando acontecer a animação ele continuar no fim da animação. */
+    animation: show-up .5s forwards;
+  }
+}

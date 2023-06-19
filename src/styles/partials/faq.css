@@ -39,11 +39,18 @@
 }
 
 [data-anime="accordion"] dt::after {
-  content: '▼';
+  content: '';
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  background: url('../../assets/svg/arrow-red.svg') no-repeat center center;
   margin-left: 10px;
+  transform: rotate(90deg);
+  transition: transform .3s;
 }
 
 [data-anime="accordion"] dt.ativo::after {
-  content: '▲';
+  content: '';
   margin-left: 10px;
+  transform: rotate(-90deg);
 }
