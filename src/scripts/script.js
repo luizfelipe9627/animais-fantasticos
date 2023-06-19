@@ -10,6 +10,7 @@ import AnimationScroll from "./modules/scroll-animation.js";
 import DropdownMenu from "./modules/dropdown-menu.js";
 import MenuMobile from "./modules/menu-mobile.js";
 import Operation from "./modules/operation.js";
+import SlideNav from "./modules/slide-nav.js";
 
 // Está executando as funções.
 const scrollSuave = new ScrollSmooth("[data-menu='smooth'] a[href^='#']"); // Está criando um objeto e passando o link do menu como parâmetro.
@@ -49,3 +50,10 @@ menuMobile.init(); // Está chamando o método init do objeto criado.
 
 const operation = new Operation("[data-semana]", "aberto"); // Está criando um objeto e passando o dataset semana e a classe aberto como parâmetro.
 operation.init(); // Está chamando o método init do objeto criado.
+
+const slide = new SlideNav(".slide", ".slide-wrapper"); // Instancia a classe Slide.
+slide.init(); // Executa o método init que é responsável por iniciar o funcionamento do slide.
+
+slide.addControl(".custom-controls"); // Executa o método addControl que é responsável por adicionar os controles de navegação do slide. Nesse caso adiciona os controles dentro da div com a classe custom-controls que contém os controles do slide em forma de bolas com sua respectiva foto.
+
+// slide.addControl(); // Executa o método addControl que é responsável por adicionar os controles de navegação do slide. Nesse caso adiciona os controles do slide em forma de bolinhas sem foto.
