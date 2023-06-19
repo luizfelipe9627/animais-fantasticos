@@ -1,6 +1,6 @@
-// Função chamada debounceScroll responsável por garantir que o código seja disparado apenas uma vez a cada certo tempo.
-// O export é usado para permitir que o código seja usado em outro arquivo JS. O default é geralmente usado para quando tem que exportar somente uma função do mesmo arquivo.
-export default function debounceScroll(callback, delay) {
+// Função responsável por criar um delay na execução de uma função para evitar que a mesma seja executada várias vezes em um curto espaço de tempo, o que pode causar problemas de performance.
+// O export é usado para permitir que o código seja usado em outro arquivo JS. O default é geralmente usado para quando tem que exportar somente uma função/classe do mesmo arquivo.
+export default function debounce(callback, delay) {
   let timer; // Variável que armazena o timer.
 
   // Ao executar a função debounce retorna e executa uma função anônima. Essa função anônima recebe os parâmetros passados na função debounce.
